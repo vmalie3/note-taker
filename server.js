@@ -47,5 +47,17 @@ app.post('/api/notes', (req, res) => {
 })
 
 
+app.delete('/api/notes/:id', (req, res) => {
+    let id = req.params.id.toString();
+
+    let data = JSON.parse(fs.readFileSync('./db/db.json', 'utf8'));
+
+    const updatedData = data.filter( note => note.id.toString() != id);
+
+    fs.writeFileSync('./db/db.json', JSON.stringify(updatedData));
+
+    return res.json(updatedData);
+})
+
 
 app.listen(port);
